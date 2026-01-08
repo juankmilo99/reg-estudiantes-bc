@@ -1,8 +1,8 @@
 # API de Registro de Estudiantes
 
-Backend desarrollado en .NET 10 con PostgreSQL para gestionar el registro de estudiantes en un programa de créditos académicos.
+Backend desarrollado en .NET 10 con  para gestionar el registro de estudiantes en un programa de créditos académicos.
 
-## ?? Descripción
+##  Descripción
 
 Sistema de inscripción de materias que permite a los estudiantes registrarse en línea y adherirse a un programa de créditos con las siguientes características:
 
@@ -13,7 +13,7 @@ Sistema de inscripción de materias que permite a los estudiantes registrarse en 
 - Los estudiantes pueden ver en línea los registros de otros estudiantes
 - Pueden ver el nombre de los alumnos con quienes compartirán cada clase
 
-## ??? Tecnologías
+##  Tecnologías
 
 - **.NET 10** - Framework principal
 - **Entity Framework Core** - ORM
@@ -21,7 +21,7 @@ Sistema de inscripción de materias que permite a los estudiantes registrarse en 
 - **Npgsql** - Driver PostgreSQL
 - **Scalar** - Documentación API interactiva
 
-## ?? Endpoints Principales
+##  Endpoints Principales
 
 ### Estudiantes
 - `GET /api/estudiantes` - Listar todos los estudiantes
@@ -59,7 +59,7 @@ Acceder a:
 - **Scalar UI**: `https://localhost:7216/scalar/v1`
 - **API Base**: `https://localhost:7216/api/`
 
-## ?? Estructura
+##  Estructura
 
 ```
 reg-estudiantes-bc/
@@ -70,6 +70,6 @@ reg-estudiantes-bc/
 ??? Data/             # Contexto Entity Framework
 ```
 
-## ????? Autor
+##  Autor
 
 Juan Camilo - [GitHub](https://github.com/juankmilo99)
