@@ -30,15 +30,23 @@ namespace reg_estudiantes_bc.Services
             if (inscripcionesActuales + dto.MateriasIds.Count > 3)
                 throw new InvalidOperationException("El estudiante ya tiene materias inscritas. Solo puede tener máximo 3 materias en total");
 
+            var periodoActivo = await _context.Periodos
+                .FirstOrDefaultAsync(p => p.Activo);
+
+            if (periodoActivo == null)
+                throw new InvalidOperationException("No hay un período activo para inscribirse");
+
             var profesoresActuales = await _context.Inscripciones
                 .Where(i => i.EstudianteId == dto.EstudianteId)
                 .Include(i => i.Materia)
-                    .ThenInclude(m => m.ProfesoresMaterias)
-                .SelectMany(i => i.Materia.ProfesoresMaterias.Select(pm => pm.ProfesorId))
+                    .ThenInclude(m => m.ProfesoresMaterias.Where(pm => pm.PeriodoId == periodoActivo.Id))
+                .SelectMany(i => i.Materia.ProfesoresMaterias
+                    .Where(pm => pm.PeriodoId == periodoActivo.Id)
+                    .Select(pm => pm.ProfesorId))
                 .ToListAsync();
 
             var materiasAInscribir = await _context.Materias
-                .Include(m => m.ProfesoresMaterias)
+                .Include(m => m.ProfesoresMaterias.Where(pm => pm.PeriodoId == periodoActivo.Id))
                 .Where(m => dto.MateriasIds.Contains(m.Id))
                 .ToListAsync();
 
@@ -46,7 +54,9 @@ namespace reg_estudiantes_bc.Services
                 throw new InvalidOperationException("Una o más materias no existen");
 
             var profesoresNuevos = materiasAInscribir
-                .SelectMany(m => m.ProfesoresMaterias.Select(pm => pm.ProfesorId))
+                .SelectMany(m => m.ProfesoresMaterias
+                    .Where(pm => pm.PeriodoId == periodoActivo.Id)
+                    .Select(pm => pm.ProfesorId))
                 .ToList();
 
             if (profesoresActuales.Any(p => profesoresNuevos.Contains(p)))
@@ -66,10 +76,16 @@ namespace reg_estudiantes_bc.Services
                 if (inscripcionExiste)
                     throw new InvalidOperationException($"Ya está inscrito en la materia con ID {materiaId}");
 
+                var profesorMateriaId = await _context.ProfesoresMaterias
+                    .Where(pm => pm.MateriaId == materiaId && pm.PeriodoId == periodoActivo.Id)
+                    .Select(pm => pm.Id)
+                    .FirstOrDefaultAsync();
+
                 var inscripcion = new Inscripcion
                 {
                     EstudianteId = dto.EstudianteId,
-                    MateriaId = materiaId
+                    MateriaId = materiaId,
+                    ProfesorMateriaId = profesorMateriaId != 0 ? profesorMateriaId : null
                 };
 
                 _context.Inscripciones.Add(inscripcion);
