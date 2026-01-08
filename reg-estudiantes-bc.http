@@ -1,0 +1,6 @@
+@reg_estudiantes_bc_HostAddress = http://localhost:5114
+
+GET {{reg_estudiantes_bc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
