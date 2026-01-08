@@ -63,6 +63,9 @@ dotnet restore
 
 # Ejecutar la aplicación
 dotnet run
+
+# Pruebas unitarias
+dotnet test
 ```
 
 Acceder a:
