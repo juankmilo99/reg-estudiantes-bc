@@ -24,7 +24,8 @@ namespace reg_estudiantes_bc.Services
                     Id = e.Id,
                     Nombre = e.Nombre,
                     Email = e.Email,
-                    FechaRegistro = e.FechaRegistro,
+                    CreatedAt = e.CreatedAt,
+                    UpdatedAt = e.UpdatedAt,
                     Materias = e.Inscripciones.Select(i => new MateriaBasicDto
                     {
                         Id = i.Materia.Id,
@@ -50,7 +51,8 @@ namespace reg_estudiantes_bc.Services
                 Id = estudiante.Id,
                 Nombre = estudiante.Nombre,
                 Email = estudiante.Email,
-                FechaRegistro = estudiante.FechaRegistro,
+                CreatedAt = estudiante.CreatedAt,
+                UpdatedAt = estudiante.UpdatedAt,
                 Materias = estudiante.Inscripciones.Select(i => new MateriaBasicDto
                 {
                     Id = i.Materia.Id,
@@ -70,7 +72,8 @@ namespace reg_estudiantes_bc.Services
             {
                 Nombre = dto.Nombre,
                 Email = dto.Email,
-                FechaRegistro = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
             _context.Estudiantes.Add(estudiante);
@@ -81,7 +84,8 @@ namespace reg_estudiantes_bc.Services
                 Id = estudiante.Id,
                 Nombre = estudiante.Nombre,
                 Email = estudiante.Email,
-                FechaRegistro = estudiante.FechaRegistro,
+                CreatedAt = estudiante.CreatedAt,
+                UpdatedAt = estudiante.UpdatedAt,
                 Materias = []
             };
         }
@@ -105,6 +109,7 @@ namespace reg_estudiantes_bc.Services
                 estudiante.Email = dto.Email;
             }
 
+            estudiante.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
 
             return await GetByIdAsync(id);
@@ -128,6 +133,9 @@ namespace reg_estudiantes_bc.Services
                 .Include(i => i.Materia)
                     .ThenInclude(m => m.ProfesoresMaterias)
                         .ThenInclude(pm => pm.Profesor)
+                .Include(i => i.Materia)
+                    .ThenInclude(m => m.ProfesoresMaterias)
+                        .ThenInclude(pm => pm.Periodo)
                 .Select(i => i.Materia)
                 .ToListAsync();
 
@@ -156,6 +164,12 @@ namespace reg_estudiantes_bc.Services
                     {
                         Id = profesorMateria.Profesor.Id,
                         Nombre = profesorMateria.Profesor.Nombre
+                    } : null,
+                    Periodo = profesorMateria?.Periodo != null ? new PeriodoBasicDto
+                    {
+                        Id = profesorMateria.Periodo.Id,
+                        Nombre = profesorMateria.Periodo.Nombre,
+                        Activo = profesorMateria.Periodo.Activo
                     } : null,
                     Companeros = companeros
                 });

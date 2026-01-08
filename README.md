@@ -44,6 +44,17 @@ Sistema de inscripción de materias que permite a los estudiantes registrarse en 
 - `GET /api/profesores` - Listar todos los profesores
 - `GET /api/profesores/{id}` - Obtener un profesor
 
+
+### Períodos
+- `GET /api/periodos` - Listar todos los períodos
+- `GET /api/periodos/{id}` - Obtener un período
+- `GET /api/periodos/activo` - Obtener el período activo
+- `POST /api/periodos` - Crear período
+- `PUT /api/periodos/{id}` - Actualizar período
+- `DELETE /api/periodos/{id}` - Eliminar período
+- `POST /api/periodos/{id}/activar` - Activar un período
+
+
 ## Ejecución
 
 ```bash

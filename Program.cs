@@ -18,6 +18,7 @@ builder.Services.AddScoped<IEstudianteService, EstudianteService>();
 builder.Services.AddScoped<IMateriaService, MateriaService>();
 builder.Services.AddScoped<IProfesorService, ProfesorService>();
 builder.Services.AddScoped<IInscripcionService, InscripcionService>();
+builder.Services.AddScoped<IPeriodoService, PeriodoService>();
 
 builder.Services.AddCors(options =>
 {

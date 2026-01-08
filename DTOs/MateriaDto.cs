@@ -6,6 +6,7 @@ namespace reg_estudiantes_bc.DTOs
         public string Nombre { get; set; } = string.Empty;
         public int Creditos { get; set; }
         public ProfesorBasicDto? Profesor { get; set; }
+        public PeriodoBasicDto? Periodo { get; set; }
     }
 
     public class MateriaBasicDto
@@ -21,6 +22,7 @@ namespace reg_estudiantes_bc.DTOs
         public string Nombre { get; set; } = string.Empty;
         public int Creditos { get; set; }
         public ProfesorBasicDto? Profesor { get; set; }
+        public PeriodoBasicDto? Periodo { get; set; }
         public List<EstudianteBasicDto> Companeros { get; set; } = [];
     }
 }

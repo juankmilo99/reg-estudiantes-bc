@@ -18,10 +18,22 @@ namespace reg_estudiantes_bc.Models
         [Column("materia_id")]
         public int MateriaId { get; set; }
 
+        [Column("profesor_materia_id")]
+        public int? ProfesorMateriaId { get; set; }
+
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
         [ForeignKey("EstudianteId")]
         public Estudiante Estudiante { get; set; } = null!;
 
         [ForeignKey("MateriaId")]
         public Materia Materia { get; set; } = null!;
+
+        [ForeignKey("ProfesorMateriaId")]
+        public ProfesorMateria? ProfesorMateria { get; set; }
     }
 }

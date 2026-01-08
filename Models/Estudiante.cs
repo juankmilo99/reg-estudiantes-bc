@@ -21,8 +21,11 @@ namespace reg_estudiantes_bc.Models
         [Column("email")]
         public string Email { get; set; } = string.Empty;
 
-        [Column("fecha_registro")]
-        public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<Inscripcion> Inscripciones { get; set; } = [];
     }

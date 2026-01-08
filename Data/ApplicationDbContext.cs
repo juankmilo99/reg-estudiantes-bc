@@ -15,6 +15,7 @@ namespace reg_estudiantes_bc.Data
         public DbSet<Profesor> Profesores { get; set; }
         public DbSet<ProfesorMateria> ProfesoresMaterias { get; set; }
         public DbSet<Inscripcion> Inscripciones { get; set; }
+        public DbSet<Periodo> Periodos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

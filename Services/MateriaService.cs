@@ -18,6 +18,8 @@ namespace reg_estudiantes_bc.Services
             return await _context.Materias
                 .Include(m => m.ProfesoresMaterias)
                     .ThenInclude(pm => pm.Profesor)
+                .Include(m => m.ProfesoresMaterias)
+                    .ThenInclude(pm => pm.Periodo)
                 .Select(m => new MateriaDto
                 {
                     Id = m.Id,
@@ -27,7 +29,13 @@ namespace reg_estudiantes_bc.Services
                     {
                         Id = pm.Profesor.Id,
                         Nombre = pm.Profesor.Nombre
-                    }).FirstOrDefault()
+                    }).FirstOrDefault(),
+                    Periodo = m.ProfesoresMaterias.Select(pm => pm.Periodo != null ? new PeriodoBasicDto
+                    {
+                        Id = pm.Periodo.Id,
+                        Nombre = pm.Periodo.Nombre,
+                        Activo = pm.Periodo.Activo
+                    } : null).FirstOrDefault()
                 })
                 .ToListAsync();
         }
@@ -37,6 +45,8 @@ namespace reg_estudiantes_bc.Services
             var materia = await _context.Materias
                 .Include(m => m.ProfesoresMaterias)
                     .ThenInclude(pm => pm.Profesor)
+                .Include(m => m.ProfesoresMaterias)
+                    .ThenInclude(pm => pm.Periodo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (materia == null)
@@ -53,6 +63,12 @@ namespace reg_estudiantes_bc.Services
                 {
                     Id = profesorMateria.Profesor.Id,
                     Nombre = profesorMateria.Profesor.Nombre
+                } : null,
+                Periodo = profesorMateria?.Periodo != null ? new PeriodoBasicDto
+                {
+                    Id = profesorMateria.Periodo.Id,
+                    Nombre = profesorMateria.Periodo.Nombre,
+                    Activo = profesorMateria.Periodo.Activo
                 } : null
             };
         }
@@ -74,6 +90,8 @@ namespace reg_estudiantes_bc.Services
             return await _context.Materias
                 .Include(m => m.ProfesoresMaterias)
                     .ThenInclude(pm => pm.Profesor)
+                .Include(m => m.ProfesoresMaterias)
+                    .ThenInclude(pm => pm.Periodo)
                 .Where(m => !materiasInscritas.Contains(m.Id) &&
                            !m.ProfesoresMaterias.Any(pm => profesoresDelEstudiante.Contains(pm.ProfesorId)))
                 .Select(m => new MateriaDto
@@ -85,7 +103,13 @@ namespace reg_estudiantes_bc.Services
                     {
                         Id = pm.Profesor.Id,
                         Nombre = pm.Profesor.Nombre
-                    }).FirstOrDefault()
+                    }).FirstOrDefault(),
+                    Periodo = m.ProfesoresMaterias.Select(pm => pm.Periodo != null ? new PeriodoBasicDto
+                    {
+                        Id = pm.Periodo.Id,
+                        Nombre = pm.Periodo.Nombre,
+                        Activo = pm.Periodo.Activo
+                    } : null).FirstOrDefault()
                 })
                 .ToListAsync();
         }

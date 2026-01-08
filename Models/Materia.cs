@@ -19,6 +19,12 @@ namespace reg_estudiantes_bc.Models
         [Column("creditos")]
         public int Creditos { get; set; } = 3;
 
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
         public ICollection<Inscripcion> Inscripciones { get; set; } = [];
         public ICollection<ProfesorMateria> ProfesoresMaterias { get; set; } = [];
     }
