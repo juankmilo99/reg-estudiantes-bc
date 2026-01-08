@@ -17,7 +17,6 @@ Sistema de inscripción de materias que permite a los estudiantes registrarse en 
 
 - **.NET 10** - Framework principal
 - **Entity Framework Core** - ORM
-- **PostgreSQL** - Base de datos
 - **Npgsql** - Driver PostgreSQL
 - **Scalar** - Documentación API interactiva
 
@@ -45,7 +44,7 @@ Sistema de inscripción de materias que permite a los estudiantes registrarse en 
 - `GET /api/profesores` - Listar todos los profesores
 - `GET /api/profesores/{id}` - Obtener un profesor
 
-## ?? Ejecución
+## Ejecución
 
 ```bash
 # Restaurar dependencias
